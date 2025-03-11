@@ -11,6 +11,7 @@
 
 - You must have Node installed to run the following commands.
 [WDD 330 Setup Environment](https://byui-cse.github.io/wdd330-ww-course/intro/) 
+[WDD 330 Page](https://tangerine-flan-3014e9.netlify.app/)
 
 ### Common Workflow Commands
 
