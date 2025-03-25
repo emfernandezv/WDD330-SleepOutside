@@ -36,3 +36,16 @@ export function renderListWithTemplate(template, parentElement, list, position =
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+export function updateCartIcon() {
+  const cartItems = getLocalStorage("so-cart");
+  const cartCount = cartItems ? cartItems.reduce((total, item) => total + (item.quantity || 1), 0) : 0;
+  const cartIcon = document.querySelector(".cart");
+  const existingSup = cartIcon.querySelector("sup");
+  if (existingSup) {
+    existingSup.textContent = cartCount;
+  } else {
+    cartIcon.innerHTML = `<sup>${cartCount}</sup>${cartIcon.innerHTML}`;
+  }
+}
+
