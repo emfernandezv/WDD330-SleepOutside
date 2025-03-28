@@ -11,7 +11,7 @@ export class Alert {
             const alerts = await response.json();
             return alerts;
         } catch (error) {
-            console.error('Error fetching alerts:', error);
+            console.error("Error fetching alerts:", error);
             return [];
         }
     }
@@ -19,11 +19,11 @@ export class Alert {
     async displayAlerts() {
         const alerts = await this.fetchAlerts();
         if (alerts.length > 0) {
-            const alertSection = document.createElement('section');
-            alertSection.className = 'alert-list';
+            const alertSection = document.createElement("section");
+            alertSection.className = "alert-list";
 
             alerts.forEach(alert => {
-                const alertParagraph = document.createElement('p');
+                const alertParagraph = document.createElement("p");
                 alertParagraph.textContent = alert.message;
                 alertParagraph.style.backgroundColor = alert.backgroundColor;
                 alertParagraph.style.color = alert.foregroundColor;
@@ -36,5 +36,5 @@ export class Alert {
 }
 
 // Usage example
-const alert = new Alert('/path/to/alerts.json');
-alert.displayAlerts();
+const alertC = new Alert("/path/to/alerts.json");
+alertC.displayAlerts();

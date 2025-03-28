@@ -1,6 +1,5 @@
-import { getLocalStorage, updateCartIcon } from "./utils.mjs";
-
-updateCartIcon();
+import { getLocalStorage, loadHeaderFooter, updateCartIcon } from "./utils.mjs";
+loadHeaderFooter();
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
@@ -8,7 +7,7 @@ function renderCartContents() {
   if (cartItems) {
       const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
-    const totalPrice = cartItems.reduce((total, item) => total + item.FinalPrice, 0);
+    const totalPrice = cartItems.reduce((total, item) => total + (item.FinalPrice * item.quantity), 0);
     document.querySelector(".cart-footer").innerHTML = `Total: $${totalPrice.toFixed(2)}`;
   }
   else {
@@ -37,9 +36,9 @@ function cartItemTemplate(item) {
   return newItem;
 }
 
-document.addEventListener('click', function(event) {
-  if (event.target.classList.contains('remove-item')) {
-    const itemId = event.target.getAttribute('data-id');
+document.addEventListener("click", function(event) {
+  if (event.target.classList.contains("remove-item")) {
+    const itemId = event.target.getAttribute("data-id");
     let cartItems = getLocalStorage("so-cart");
     const itemIndex = cartItems.findIndex(item => item.Id === itemId);
     
@@ -53,8 +52,8 @@ document.addEventListener('click', function(event) {
     
     localStorage.setItem("so-cart", JSON.stringify(cartItems));
     renderCartContents();
-    updateCartIcon();
-  }
+    updateCartIcon()
+ }
 });
 
 renderCartContents();
