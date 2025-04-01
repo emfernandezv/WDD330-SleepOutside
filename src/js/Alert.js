@@ -1,7 +1,7 @@
 export class Alert {
     constructor(alert) {
             this.alert = alert;
-            this.path = `../json/alerts.json`;
+            this.path = `../json/Alerts.json`;
           }
     
 
@@ -35,6 +35,3 @@ export class Alert {
     }
 }
 
-// Usage example
-const alertC = new Alert("/path/to/alerts.json");
-alertC.displayAlerts();
