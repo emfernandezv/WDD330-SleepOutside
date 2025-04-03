@@ -7,7 +7,7 @@ function renderCartContents() {
   if (cartItems) {
       const htmlItems = cartItems.map((item) => cartItemTemplate(item));
     document.querySelector(".product-list").innerHTML = htmlItems.join("");
-    const totalPrice = cartItems.reduce((total, item) => total + (item.FinalPrice * item.quantity), 0);
+    const totalPrice = cartItems.reduce((total, item) => total + (item['Result'].FinalPrice * item.quantity), 0);
     document.querySelector(".cart-footer").innerHTML = `Total: $${totalPrice.toFixed(2)}`;
   }
   else {
@@ -19,17 +19,17 @@ function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
-      src="${item.Images.PrimaryMedium}"
-      alt="${item.Name}"
+      src="${item['Result'].Images.PrimarySmall}"
+      alt="${item['Result'].Name}"
     />
   </a>
   <a href="#">
-    <h2 class="card__name">${item.Name}</h2>
+    <h2 class="card__name">${item['Result'].Name}</h2>
   </a>
-  <p class="cart-card__color">${item.Colors[0].ColorName}</p>
+  <p class="cart-card__color">${item['Result'].Colors[0].ColorName}</p>
   <p class="cart-card__quantity">${item.quantity}</p>
-  <p class="cart-card__price">$${item.FinalPrice}</p>
-  <button class="remove-item" data-id="${item.Id}">Remove</button>
+  <p class="cart-card__price">$${item['Result'].FinalPrice}</p>
+  <button class="remove-item" data-id="${item['Result'].Id}">Remove</button>
 </li>`;
 
 
@@ -40,7 +40,7 @@ document.addEventListener("click", function(event) {
   if (event.target.classList.contains("remove-item")) {
     const itemId = event.target.getAttribute("data-id");
     let cartItems = getLocalStorage("so-cart");
-    const itemIndex = cartItems.findIndex(item => item.Id === itemId);
+    const itemIndex = cartItems.findIndex(item => item['Result'].Id === itemId);
     
     if (itemIndex > -1) {
       if (cartItems[itemIndex].quantity > 1) {
