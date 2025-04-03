@@ -27,21 +27,34 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item['Result'].Name}</h2>
   </a>
   <p class="cart-card__color">${item['Result'].Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">${item.quantity}</p>
+  <div class="cart-card__quantity">
+    <button class="decrease-quantity" data-id="${item['Result'].Id}">-</button>
+    <span>${item.quantity}</span>
+    <button class="increase-quantity" data-id="${item['Result'].Id}">+</button>
+  </div>
   <p class="cart-card__price">$${item['Result'].FinalPrice}</p>
-  <button class="remove-item" data-id="${item['Result'].Id}">Remove</button>
+  
 </li>`;
-
 
   return newItem;
 }
 
 document.addEventListener("click", function(event) {
-  if (event.target.classList.contains("remove-item")) {
+  let cartItems = getLocalStorage("so-cart");
+  if (event.target.classList.contains("increase-quantity")) {
     const itemId = event.target.getAttribute("data-id");
-    let cartItems = getLocalStorage("so-cart");
     const itemIndex = cartItems.findIndex(item => item['Result'].Id === itemId);
-    
+    if (itemIndex > -1) {
+      cartItems[itemIndex].quantity += 1;
+    }
+    localStorage.setItem("so-cart", JSON.stringify(cartItems));
+    renderCartContents();
+    updateCartIcon();
+  }
+
+  if (event.target.classList.contains("decrease-quantity")) {
+    const itemId = event.target.getAttribute("data-id");
+    const itemIndex = cartItems.findIndex(item => item['Result'].Id === itemId);
     if (itemIndex > -1) {
       if (cartItems[itemIndex].quantity > 1) {
         cartItems[itemIndex].quantity -= 1;
@@ -49,11 +62,11 @@ document.addEventListener("click", function(event) {
         cartItems.splice(itemIndex, 1);
       }
     }
-    
     localStorage.setItem("so-cart", JSON.stringify(cartItems));
     renderCartContents();
-    updateCartIcon()
- }
+    updateCartIcon();
+  }
 });
+
 
 renderCartContents();

@@ -18,7 +18,7 @@ async init() {
 
 addProductToCart() {
   const cartItems = getLocalStorage("so-cart") || [];
-  const existingProductIndex = cartItems.findIndex(item => item.Id === this.product['Result'].Id);
+  const existingProductIndex = cartItems.findIndex(item => item['Result'].Id === this.product['Result'].Id);
 
   if (existingProductIndex !== -1) {
     cartItems[existingProductIndex].quantity = (cartItems[existingProductIndex].quantity || 1) + 1;
